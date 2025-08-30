@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+    <link rel="stylesheet"  href="{% static 'css/login.css' %}">
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="email">Email:</label>
+            <input type="text" class="form-label" id="email" name="email" required>
+            <br>
+            <label for="password">Senha:</label>
+            <input type="password" class="form-control" id="senha" name="senha" required>
+            <br>
+            <a href="{% url 'index' %}"><button type="submit">Entrar</button></a>
+            <p><a href="{% url 'cadastro' %}">Cadastre</a> agora se é novo</p>
+            <p>Esqueçeu a senha?<a href="{% url 'rec_senha' %}">Clique aqui</a> para recupera-la</p>
+            <p><a href="{% url 'alterar_senha' %}">Alterar</a> senha</p>
+        </div>
+    </form>
+{% endblock %}

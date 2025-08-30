@@ -1,0 +1,10 @@
+footer {
+    color: chartreuse !important;
+    flex-shrink: 0 !important;
+}
+.logo {
+    color: red;
+}
+body {
+    background-color: blue !important;
+}

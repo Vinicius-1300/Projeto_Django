@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Recuperar Senha{% endblock %}
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet"  href="{% static 'css/rec_senha.css' %}">
+<div class="container mt-5">
+    <h1>Recuperar Senha</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="email" class="form-label">Digite seu e-mail:</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar link de recuperação</button>
+        <a href="{% url 'login' %}"><button type="submit">Voltar</button></a>
+    </form>
+</div>
+{% endblock %}

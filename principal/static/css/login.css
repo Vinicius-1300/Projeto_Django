@@ -1,0 +1,10 @@
+label {
+    color: black !important;
+}
+button {
+    text-align: center !important;
+}
+button:hover {
+    background-color: orange !important;
+    color: white !important;
+}

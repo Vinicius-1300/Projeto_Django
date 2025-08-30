@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+    <link rel="stylesheet"  href="{% static 'css/cadastro.css' %}">
+     <h1>Cadastro</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Nome:</label>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="username">Sobrenome:</label>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone">
+        <br>
+        <label for="password">Criar senha:</label>
+        <input type="password" id="senha" name="senha">
+        <br>
+        <label for="password">Confirmar senha:</label>
+        <input type="password" id="confsenha" name="confsenha">
+        <br>
+        <a href="{% url 'index' %}"><button type="submit">Cadastrar</button></a>
+        <a href="{% url 'login' %}"><button type="submit">Voltar</button></a>
+    </form>
+{% endblock %}
