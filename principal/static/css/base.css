@@ -1,6 +1,31 @@
+.container-fluid {
+    padding: 0;
+}
+/*Navbar*/
+.navbar {
+    border-bottom: 1px solid orange;
+    margin-bottom: 10px;
+}
+.navbar-nav {
+    margin: auto;   
+}
+.navbar-brand {
+    font-weight: bold;
+}
+.navbar-light .navbar-nav a.navbar-link {
+    color: aquamarine;
+}
+/*rodapé*/
 footer {
-    color: chartreuse !important;
-    flex-shrink: 0 !important;
+    background-color: darkgrey;
+    border-top: 2px solid darkgray;
+    height: 80px;
+}
+footer p {
+    color: chartreuse;
+    text-align: center;
+    top: 50%;
+    position: relative;
 }
 .logo {
     color: red;
