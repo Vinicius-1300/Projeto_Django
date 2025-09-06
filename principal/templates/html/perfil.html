@@ -6,8 +6,14 @@
     <link rel="stylesheet"  href="{% static 'css/perfil.css' %}">
     <h1>Perfil</h1>
     <div>
-        <p>Email:</p>
-        <p>Senha:</p>
+        {% for info in dados %}
+            <p>Nome:{{ info.nome }}</p>
+            <p>CPF: {{ info.cpf }}</p>
+            <p>Email: {{ info.email }}</p>
+            <p>Telefone: {{ info.telefone }}</p>
+            <p>Data de nascimento: {{ info.data_nascimento }}</p>
+            <p>UF: {{ info.uf }}</p>
+        {% endfor %}
     </div>
     <a href="{% url 'login' %}"><button type="submit">Sair</button></a>
 {% endblock %}

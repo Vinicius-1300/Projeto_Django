@@ -19,11 +19,20 @@
         <label for="telefone">Telefone:</label>
         <input type="text" id="telefone" name="telefone">
         <br>
-        <label for="password">Criar senha:</label>
+        <label for="senha">Criar senha:</label>
         <input type="password" id="senha" name="senha">
         <br>
-        <label for="password">Confirmar senha:</label>
+        <label for="confirmar">Confirmar senha:</label>
         <input type="password" id="confsenha" name="confsenha">
+        <br>
+        <label for="cpf">CPF</label>
+        <input type="number" id="cpf" name="cpf">
+        <br>
+        <label for="data">Data de nascimento:</label>
+        <input type="date" id="data" name="data">
+        <br>
+        <label for="endereço">Endereço:</label>
+        <input type="text" id="endereço" name="endereço">
         <br>
         <a href="{% url 'index' %}"><button type="submit">Cadastrar</button></a>
         <a href="{% url 'login' %}"><button type="submit">Voltar</button></a>
