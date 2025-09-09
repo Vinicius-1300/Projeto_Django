@@ -1,8 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.template import loader
 from .models import Usuario
-#from .models import Member
+from .forms import Cadastro
 
 def index(request):
     return render(request, 'html/index.html')
@@ -11,7 +10,14 @@ def login(request):
     return render(request, 'html/login.html')
 
 def cadastro(request):
-    return render(request, 'html/cadastro.html')
+    if request.method == 'POST':
+        form = Cadastro(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect( 'html/logins.html')
+    else:
+        form = Cadastro()
+    return render(request, 'html/cadastro.html', {'form': form})
 
 def recuperar_senha(request):
     return render(request, 'html/rec_senha.html')

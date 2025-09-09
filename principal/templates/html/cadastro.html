@@ -4,37 +4,12 @@
 {% endblock %}
 {% block content %}
     <link rel="stylesheet"  href="{% static 'css/cadastro.css' %}">
-     <h1>Cadastro</h1>
-    <form method="post">
+    <h1>Cadastro</h1>
+    <form method="POST" action="{% url 'cadastro' %}">
         {% csrf_token %}
-        <label for="username">Nome:</label>
-        <input type="text" id="nome" name="nome">
-        <br>
-        <label for="username">Sobrenome:</label>
-        <input type="text" id="sobrenome" name="sobrenome">
-        <br>
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email">
-        <br>
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="telefone">
-        <br>
-        <label for="senha">Criar senha:</label>
-        <input type="password" id="senha" name="senha">
-        <br>
-        <label for="confirmar">Confirmar senha:</label>
-        <input type="password" id="confsenha" name="confsenha">
-        <br>
-        <label for="cpf">CPF</label>
-        <input type="number" id="cpf" name="cpf">
-        <br>
-        <label for="data">Data de nascimento:</label>
-        <input type="date" id="data" name="data">
-        <br>
-        <label for="endereço">Endereço:</label>
-        <input type="text" id="endereço" name="endereço">
-        <br>
-        <a href="{% url 'index' %}"><button type="submit">Cadastrar</button></a>
-        <a href="{% url 'login' %}"><button type="submit">Voltar</button></a>
+        {{ form.as_p }}
+        <button type="submit">Cadastrar</button>
     </form>
+        <a href="{% url 'login' %}"><button type="button">Voltar</button></a>
+    
 {% endblock %}
