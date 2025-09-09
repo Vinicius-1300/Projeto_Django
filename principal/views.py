@@ -14,7 +14,7 @@ def cadastro(request):
         form = Cadastro(request.POST)
         if form.is_valid():
             form.save()
-            return redirect( 'html/logins.html')
+            return redirect('login')
     else:
         form = Cadastro()
     return render(request, 'html/cadastro.html', {'form': form})
