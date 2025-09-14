@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import Usuario
-from .forms import Cadastro
+from .forms import Cadastro, Endereco
 
 def index(request):
     return render(request, 'html/index.html')
@@ -12,12 +13,15 @@ def login(request):
 def cadastro(request):
     if request.method == 'POST':
         form = Cadastro(request.POST)
-        if form.is_valid():
+        form_endereco = Endereco(request.POST)
+        if form.is_valid() and form_endereco.is_valid():
             form.save()
-            return redirect( 'html/logins.html')
+            form_endereco.save()
+            return redirect('login')
     else:
         form = Cadastro()
-    return render(request, 'html/cadastro.html', {'form': form})
+        form_endereco = Endereco()
+    return render(request, 'html/cadastro.html', {'form': form, 'form_endereco': form_endereco})
 
 def recuperar_senha(request):
     return render(request, 'html/rec_senha.html')
@@ -26,8 +30,17 @@ def alterar_senha(request):
     return render(request, 'html/alterar_senha.html')
 
 def perfil(request):
-    dados = Usuario.objects.all()
-    return render(request, 'html/perfil.html', {'dados': dados})
+    dados = get_object_or_404(Usuario, pk=request.user.id)
+    form = Cadastro(instance=dados)
+    if(request.method == 'POST'):
+        form = Cadastro(request.POST, instance=dados)
+        if(form.is_valid()):
+            form.save()
+            return redirect('index')
+        else:
+            return render(request, 'html/perfil.html', {'dados': dados, 'form':form})
+    else:
+         return render(request, 'html/perfil.html', {'dados': dados, 'form':form})
 
 def er404(request):
     return render(request, 'html/er404.html')
