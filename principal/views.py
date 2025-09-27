@@ -1,27 +1,38 @@
 from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
 from .models import Usuario
-from .forms import Cadastro, Endereco
+from .forms import Cadastro
 
 def index(request):
     return render(request, 'html/index.html')
 
 def login(request):
-    return render(request, 'html/login.html')
+    erro = None
+    if request.method == 'POST':
+        email = request.POST.get('email') 
+        senha = request.POST.get('senha')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        auth_admin = authenticate(request, username=username, password=password)
+        if auth_admin:
+            if auth_admin.is_superuser:
+                return redirect('admin')
+        auth_usuario = Usuario.objects.filter(email=email, senha=senha).first()
+        if auth_usuario:
+            request.session['id'] = auth_usuario.id
+            return redirect('index') 
+        erro = 'Email ou senha inválidos'
+    return render(request, 'html/login.html', {'erro': erro})
 
 def cadastro(request):
     if request.method == 'POST':
         form = Cadastro(request.POST)
-        form_endereco = Endereco(request.POST)
-        if form.is_valid() and form_endereco.is_valid():
+        if form.is_valid():
             form.save()
-            form_endereco.save()
             return redirect('login')
     else:
         form = Cadastro()
-        form_endereco = Endereco()
-    return render(request, 'html/cadastro.html', {'form': form, 'form_endereco': form_endereco})
+    return render(request, 'html/cadastro.html', {'form': form})
 
 def recuperar_senha(request):
     return render(request, 'html/rec_senha.html')
@@ -30,17 +41,7 @@ def alterar_senha(request):
     return render(request, 'html/alterar_senha.html')
 
 def perfil(request):
-    dados = get_object_or_404(Usuario, pk=request.user.id)
-    form = Cadastro(instance=dados)
-    if(request.method == 'POST'):
-        form = Cadastro(request.POST, instance=dados)
-        if(form.is_valid()):
-            form.save()
-            return redirect('index')
-        else:
-            return render(request, 'html/perfil.html', {'dados': dados, 'form':form})
-    else:
-         return render(request, 'html/perfil.html', {'dados': dados, 'form':form})
+    return render(request, 'html/perfil.html')
 
 def er404(request):
     return render(request, 'html/er404.html')

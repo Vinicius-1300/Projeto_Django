@@ -8,7 +8,6 @@
     <form method="POST" action="{% url 'cadastro' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        {{ form_endereco.as_p}}
         <button type="submit">Cadastrar</button>
     </form>
         <a href="{% url 'login' %}"><button type="button">Voltar</button></a>

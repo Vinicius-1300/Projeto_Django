@@ -1,5 +1,6 @@
 from django.db import models
 import random
+
 class Usuario(models.Model):
     id = models.CharField(max_length=8, verbose_name=u'ID', primary_key=True, blank=True, editable=False)
     def gerar_id(self):
@@ -20,7 +21,7 @@ class Usuario(models.Model):
     email = models.EmailField(max_length=40,verbose_name=u'Email')
     telefone = models.CharField(max_length=9, verbose_name=u'Telefone', null=True, blank=True)
     data_nascimento = models.DateField(verbose_name=u'Data de nascimento')
-
+    
     def __str__(self):
         return self.nome
     
@@ -48,4 +49,4 @@ class Endereco(models.Model):
     cliente_id = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.cliente_id
+        return str(self.cliente_id)
