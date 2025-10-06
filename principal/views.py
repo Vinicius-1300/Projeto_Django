@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.contrib.auth.hashers import check_password
 from .models import Usuario
 from .forms import Cadastro
 
@@ -11,17 +12,19 @@ def login(request):
     if request.method == 'POST':
         email = request.POST.get('email') 
         senha = request.POST.get('senha')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        auth_admin = authenticate(request, username=username, password=password)
-        if auth_admin:
-            if auth_admin.is_superuser:
-                return redirect('admin')
-        auth_usuario = Usuario.objects.filter(email=email, senha=senha).first()
+        auth_usuario = Usuario.objects.filter(email=email).first()
         if auth_usuario:
             request.session['id'] = auth_usuario.id
-            return redirect('index') 
-        erro = 'Email ou senha inválidos'
+            if auth_usuario.nivel == 'Padrão':
+                print("Usuário autenticado:", auth_usuario.email)
+                print("Nível:", auth_usuario.nivel)
+                return redirect('index')
+            elif auth_usuario.nivel == 'Gestor':
+                print("Usuário autenticado:", auth_usuario.email)
+                print("Nível:", auth_usuario.nivel)
+                return redirect('gestor')
+        erro = 'Eamil ou senha inválidos'
+
     return render(request, 'html/login.html', {'erro': erro})
 
 def cadastro(request):
@@ -41,7 +44,11 @@ def alterar_senha(request):
     return render(request, 'html/alterar_senha.html')
 
 def perfil(request):
-    return render(request, 'html/perfil.html')
+    user_id = request.session.get('id')
+    if not user_id:
+        return redirect('login')
+    dados = Usuario.objects.get(id=user_id)
+    return render(request, 'html/perfil.html', {'dados': dados})
 
 def er404(request):
     return render(request, 'html/er404.html')
@@ -52,13 +59,5 @@ def er403(request):
 def er500(request):
     return render(request, 'html/er500.html')
 
-#Request dos dados no model
-
-"""def dados(request):
-    dado = Pessoa.objects.all().values()
-    template = loader.get_template('html/perfil.html')
-    context = {
-        'dados': dado,
-    }
-    return HttpResponse(template.render(context, request))
-    #Alternativa: return render(request, 'html/perfil.html', {'dados': dado})"""
+def gestor_page(request):
+    return render(request, 'html/gestor_page.html')

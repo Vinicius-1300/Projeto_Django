@@ -6,7 +6,7 @@ import re
 class Cadastro(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = ('nome', 'genero', 'email', 'cpf', 'senha', 'telefone', 'data_nascimento')
+        fields = ('nome', 'genero', 'email', 'cpf', 'senha', 'telefone', 'data_nascimento', 'nivel')
 
     def clean_nome(self):
         nome = self.cleaned_data['nome']

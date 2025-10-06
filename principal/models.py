@@ -10,6 +10,9 @@ class Usuario(models.Model):
             self.id = self.gerar_id()
         super().save(*args, **kwargs)
     nome = models.CharField(max_length=30, verbose_name=u'Nome')
+    NIVEL = [('Padrão', 'Padrão'),
+             ('Gestor', 'Gestor'),
+    ]
     GENERO = [('M', 'Masculino'),
               ('F', 'Feminino'),
               ('Transgênero', 'Transgênero'),
@@ -21,6 +24,7 @@ class Usuario(models.Model):
     email = models.EmailField(max_length=40,verbose_name=u'Email')
     telefone = models.CharField(max_length=9, verbose_name=u'Telefone', null=True, blank=True)
     data_nascimento = models.DateField(verbose_name=u'Data de nascimento')
+    nivel = models.CharField(verbose_name=u'Nivel de usuario:', choices=NIVEL)
     
     def __str__(self):
         return self.nome

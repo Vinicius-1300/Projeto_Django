@@ -11,4 +11,5 @@ urlpatterns = [
     path('404', views.er404, name='404'),
     path('403', views.er403, name='403'),
     path('500', views.er500, name='500'),
+    path('gestor/', views.gestor_page, name='gestor')
 ]

@@ -6,14 +6,13 @@
     <link rel="stylesheet"  href="{% static 'css/perfil.css' %}">
     <h1>Perfil</h1>
     <div>
-        {% for info in dados %}
-            <p>Nome:{{ info.nome }}</p><button type="submit">Alterar</button>
-            <p>CPF: {{ info.cpf }}</p>
-            <p>Email: {{ info.email }}</p>
-            <p>Telefone: {{ info.telefone }}</p>
-            <p>Data de nascimento: {{ info.data_nascimento }}</p>
-            <p>UF: {{ info.uf }}</p>
-        {% endfor %}
+        <p>Nome:{{ dados.nome }}</p><button type="submit">Alterar</button>
+        <p>Gênero: {{ dados.genero }}</p>
+        <p>CPF: {{ dados.cpf }}</p>
+        <p>Email: {{ dados.email }}</p>
+        <p>Telefone: {{ dados.telefone }}</p>
+        <p>Data de nascimento: {{ dados.data_nascimento }}</p>
+        <p>Nivel: {{ dados.nivel }}</p>
     </div>
     <a href="{% url 'login' %}"><button type="submit">Sair</button></a>
 {% endblock %}
