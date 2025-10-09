@@ -32,7 +32,7 @@ class Cadastro(forms.ModelForm):
             raise ValidationError('Tem que conter no minimo uma letra maiuscula')
         if not re.search(r'[0-9]', senha):
             raise ValidationError('Tem que conter no minimo um número')
-        if not re.search(r'[!@#$%^&*(),.:;?{}[\]\\|<>/~_+-]', senha):
+        if not re.search(r'[!@#$%^&*=(),.:;?{}[\]\\|<>/~_+-]', senha):
             raise ValidationError('Tem que conter no minimo um simbolo')
         return senha 
     

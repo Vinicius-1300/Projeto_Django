@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.contrib.auth.hashers import check_password
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import logout
+from django.contrib import messages
 from .models import Usuario
 from .forms import Cadastro
 
@@ -11,7 +11,6 @@ def login(request):
     erro = None
     if request.method == 'POST':
         email = request.POST.get('email') 
-        senha = request.POST.get('senha')
         auth_usuario = Usuario.objects.filter(email=email).first()
         if auth_usuario:
             request.session['id'] = auth_usuario.id
@@ -61,3 +60,24 @@ def er500(request):
 
 def gestor_page(request):
     return render(request, 'html/gestor_page.html')
+
+def logout_sessao(request):
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request, "Você saiu com sucesso!")
+    return redirect('login')
+
+def edicao_dados(request, id):
+    edicao = get_object_or_404(Usuario, pk=id)
+    form = Cadastro(instance=edicao)
+    if request.method == 'POST':
+        form = Cadastro(request.POST, instance=edicao)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Dados atualizados com sucesso')
+            return redirect('login')
+        else:
+            messages.error(request, 'Erro na alteração dos dados, verifique se foram alterados corretamente')
+            return render(request, 'html/edicao_dados.html', {'form': form, 'edicao': edicao})
+    else:
+        return render(request, 'html/edicao_dados.html', {'form': form, 'edicao': edicao})

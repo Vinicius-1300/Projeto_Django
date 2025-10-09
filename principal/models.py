@@ -22,7 +22,7 @@ class Usuario(models.Model):
     senha = models.CharField(max_length=20, verbose_name=u'Senha', unique=True)
     cpf = models.CharField(max_length=11, verbose_name=u'CPF', unique=True)
     email = models.EmailField(max_length=40,verbose_name=u'Email')
-    telefone = models.CharField(max_length=9, verbose_name=u'Telefone', null=True, blank=True)
+    telefone = models.CharField(max_length=11, verbose_name=u'Telefone', null=True, blank=True)
     data_nascimento = models.DateField(verbose_name=u'Data de nascimento')
     nivel = models.CharField(verbose_name=u'Nivel de usuario:', choices=NIVEL)
     

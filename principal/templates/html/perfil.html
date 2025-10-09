@@ -6,7 +6,7 @@
     <link rel="stylesheet"  href="{% static 'css/perfil.css' %}">
     <h1>Perfil</h1>
     <div>
-        <p>Nome:{{ dados.nome }}</p><button type="submit">Alterar</button>
+        <p>Nome:{{ dados.nome }}
         <p>Gênero: {{ dados.genero }}</p>
         <p>CPF: {{ dados.cpf }}</p>
         <p>Email: {{ dados.email }}</p>
@@ -14,5 +14,12 @@
         <p>Data de nascimento: {{ dados.data_nascimento }}</p>
         <p>Nivel: {{ dados.nivel }}</p>
     </div>
-    <a href="{% url 'login' %}"><button type="submit">Sair</button></a>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Sair</button>
+    </form>
+    <form method="post" action="{% url 'edicao' dados.id %}">
+        {% csrf_token %}
+        <button type="submit">Alterar</button>
+    </form>
 {% endblock %}

@@ -1,0 +1,25 @@
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+<h2>Dados Pessoais</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="id_nome">Nome:</label>
+        {{ form.nome }}
+        <br>
+        <label for="id_email">Email:</label>
+        {{ form.email }}
+        <br>
+        <label for="id_telefone">Telefone:</label>
+        {{ form.telefone }}
+        <br>
+        <label for="id_genero">Gênero:</label>
+        {{ form.genero }}
+        <br>
+        <label for="id_data_nascimento">Data de nascimento:</label>
+        {{ form.data_nascimento }}
+        <br>
+        <button type="submit">Salvar</button>
+    </form>
+    
+{% endblock %}

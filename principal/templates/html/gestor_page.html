@@ -1,1 +1,6 @@
 <h1>Pagina de gestão</h1>
+
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Sair</button>
+</form>
