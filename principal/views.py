@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.contrib import messages
 from .models import Usuario
-from .forms import Cadastro
+from .forms import Cadastro, Endereco
 
 def index(request):
     return render(request, 'html/index.html')
@@ -36,6 +36,23 @@ def cadastro(request):
         form = Cadastro()
     return render(request, 'html/cadastro.html', {'form': form})
 
+def cadastroEndereco(request):
+   def cadastroEndereco(request):
+    if request.method == 'POST':
+        form_end = Endereco(request.POST)
+        if form_end.is_valid():
+            endereco = form_end.save(commit=False)
+            if isinstance(request.user, Usuario):
+                endereco.cliente_id = request.user  
+                endereco.save()
+                return redirect('index')
+            else:
+                form_end.add_error(None, 'Usuário não está autenticado ou não é válido.')
+    else:
+        form_end = Endereco()
+    return render(request, 'html/cadastro_endereco.html', {
+        'form_end': form_end
+    })
 def recuperar_senha(request):
     return render(request, 'html/rec_senha.html')
 

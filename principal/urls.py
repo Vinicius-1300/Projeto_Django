@@ -14,5 +14,6 @@ urlpatterns = [
     path('gestor/', views.gestor_page, name='gestor'),
     path('logout/', views.logout_sessao, name='logout'),
     path('edicao/<str:id>', views.edicao_dados, name='edicao'),
-    path('deletar/<str:id>', views.deletar_conta, name='deletar')
+    path('deletar/<str:id>', views.deletar_conta, name='deletar'),
+    path('cadastro_endereco/', views.cadastroEndereco, name='cadastro_endereco')
 ]
