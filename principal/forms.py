@@ -7,6 +7,7 @@ class Cadastro(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ('nome', 'genero', 'email', 'cpf', 'senha', 'telefone', 'data_nascimento', 'nivel')
+        exclude = ['senha', 'cpf']
 
     def clean_nome(self):
         nome = self.cleaned_data['nome']

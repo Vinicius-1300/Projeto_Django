@@ -19,7 +19,7 @@
         <label for="id_data_nascimento">Data de nascimento:</label>
         {{ form.data_nascimento }}
         <br>
-        <button type="submit">Salvar</button>
+        <a href="{% url 'index' %}"><button type="submit">Salvar</button></a>
     </form>
     
 {% endblock %}

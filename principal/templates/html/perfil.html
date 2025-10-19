@@ -22,4 +22,8 @@
         {% csrf_token %}
         <button type="submit">Alterar</button>
     </form>
+    <form method="post" action="{% url 'deletar' dados.id %}">
+        {% csrf_token %}
+        <button type="submit">Excluir conta</button>
+    </form>
 {% endblock %}

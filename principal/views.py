@@ -81,3 +81,10 @@ def edicao_dados(request, id):
             return render(request, 'html/edicao_dados.html', {'form': form, 'edicao': edicao})
     else:
         return render(request, 'html/edicao_dados.html', {'form': form, 'edicao': edicao})
+    
+def deletar_conta(request, id):
+    deletar = get_object_or_404(Usuario, pk=id)
+    deletar.delete()
+    messages.success(request, 'Conta excluida com sucesso')
+    return redirect('login')
+
