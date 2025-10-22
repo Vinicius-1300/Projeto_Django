@@ -3,7 +3,9 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from .models import Usuario
 from .forms import Cadastro, Endereco
+from .decorador import usuario_requisicao
 
+@usuario_requisicao()
 def index(request):
     return render(request, 'html/index.html')
 
@@ -36,8 +38,10 @@ def cadastro(request):
         form = Cadastro()
     return render(request, 'html/cadastro.html', {'form': form})
 
+@usuario_requisicao()
 def cadastroEndereco(request):
-   def cadastroEndereco(request):
+   return render(request, 'html/cadastro_endereco')
+   """def cadastroEndereco(request):
     if request.method == 'POST':
         form_end = Endereco(request.POST)
         if form_end.is_valid():
@@ -52,13 +56,15 @@ def cadastroEndereco(request):
         form_end = Endereco()
     return render(request, 'html/cadastro_endereco.html', {
         'form_end': form_end
-    })
+    })"""
+
 def recuperar_senha(request):
     return render(request, 'html/rec_senha.html')
 
 def alterar_senha(request):
     return render(request, 'html/alterar_senha.html')
 
+@usuario_requisicao()
 def perfil(request):
     user_id = request.session.get('id')
     if not user_id:
@@ -75,15 +81,18 @@ def er403(request):
 def er500(request):
     return render(request, 'html/er500.html')
 
+@usuario_requisicao(nivel='Gestor')
 def gestor_page(request):
     return render(request, 'html/gestor_page.html')
 
+@usuario_requisicao()
 def logout_sessao(request):
     if request.user.is_authenticated:
         logout(request)
         messages.success(request, "Você saiu com sucesso!")
     return redirect('login')
 
+@usuario_requisicao()
 def edicao_dados(request, id):
     edicao = get_object_or_404(Usuario, pk=id)
     form = Cadastro(instance=edicao)
@@ -99,6 +108,7 @@ def edicao_dados(request, id):
     else:
         return render(request, 'html/edicao_dados.html', {'form': form, 'edicao': edicao})
     
+@usuario_requisicao()
 def deletar_conta(request, id):
     deletar = get_object_or_404(Usuario, pk=id)
     deletar.delete()
