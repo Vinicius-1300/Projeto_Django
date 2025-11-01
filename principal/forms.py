@@ -2,12 +2,12 @@ from django import forms
 from .models import Usuario, Endereco
 from django.forms import ValidationError
 import re
+import bcrypt 
 
 class Cadastro(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ('nome', 'genero', 'email', 'cpf', 'senha', 'telefone', 'data_nascimento', 'nivel')
-        exclude = ['senha', 'cpf']
 
     def clean_nome(self):
         nome = self.cleaned_data['nome']
@@ -24,7 +24,7 @@ class Cadastro(forms.ModelForm):
             return cpf
         
     def clean_senha(self):
-        senha = self.cleaned_data['senha']
+        senha = self.cleaned_data.get('senha')
         if len(senha) < 8:
             raise ValidationError('Senha precisa ter no mínimo 8 caracteres')
         if not re.search(r'[a-z]', senha):
@@ -35,7 +35,8 @@ class Cadastro(forms.ModelForm):
             raise ValidationError('Tem que conter no minimo um número')
         if not re.search(r'[!@#$%^&*=(),.:;?{}[\]\\|<>/~_+-]', senha):
             raise ValidationError('Tem que conter no minimo um simbolo')
-        return senha 
+        hashed_password = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
+        return hashed_password.decode('utf-8')
     
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -45,6 +46,7 @@ class Cadastro(forms.ModelForm):
             raise ValidationError('Digite um email válido')
         else:
             return email
+        
 class Endereco(forms.ModelForm):
     class Meta:
         model = Endereco

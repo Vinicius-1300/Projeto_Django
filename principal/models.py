@@ -19,7 +19,7 @@ class Usuario(models.Model):
               ('Não binário', 'Não binário'),
         ]
     genero = models.CharField(max_length=11, verbose_name=u'Gênero', choices=GENERO)
-    senha = models.CharField(max_length=20, verbose_name=u'Senha', unique=True)
+    senha = models.CharField(max_length=72, verbose_name=u'Senha', unique=True)
     cpf = models.CharField(max_length=11, verbose_name=u'CPF', unique=True)
     email = models.EmailField(max_length=40,verbose_name=u'Email', )
     telefone = models.CharField(max_length=11, verbose_name=u'Telefone', null=True, blank=True)

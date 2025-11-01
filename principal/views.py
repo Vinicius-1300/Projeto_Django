@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import Usuario
 from .forms import Cadastro, Endereco
 from .decorador import usuario_requisicao
+import bcrypt
 
 @usuario_requisicao()
 def index(request):
@@ -13,16 +14,13 @@ def login(request):
     erro = None
     if request.method == 'POST':
         email = request.POST.get('email') 
+        senha = request.POST.get('senha')
         auth_usuario = Usuario.objects.filter(email=email).first()
-        if auth_usuario:
+        if auth_usuario and bcrypt.checkpw(senha.encode('utf-8'), auth_usuario.senha.encode('utf-8')):
             request.session['id'] = auth_usuario.id
             if auth_usuario.nivel == 'Padrão':
-                print("Usuário autenticado:", auth_usuario.email)
-                print("Nível:", auth_usuario.nivel)
                 return redirect('index')
             elif auth_usuario.nivel == 'Gestor':
-                print("Usuário autenticado:", auth_usuario.email)
-                print("Nível:", auth_usuario.nivel)
                 return redirect('gestor')
         erro = 'Eamil ou senha inválidos'
 
@@ -114,4 +112,3 @@ def deletar_conta(request, id):
     deletar.delete()
     messages.success(request, 'Conta excluida com sucesso')
     return redirect('login')
-
